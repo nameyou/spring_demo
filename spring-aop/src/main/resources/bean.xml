@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--配置到层-->
+    <bean id="accountDAO" class="com.lee.demo.dao.impl.AccountDAOImpl"/>
+    <!--配置业务层-->
+    <bean id="accountService" class="com.lee.demo.service.impl.AccountServiceImpl"></bean>
+    <!--配置事务管理器-->
+    <bean id="txManager" class="com.lee.demo.tx.TranscationManger"/>
+
+
+    <!--配置aop处理-->
+    <aop:config>
+        <!--配置切面    我们说的  切入点 + 通知-->
+        <aop:aspect ref="txManager">
+            <!--配置切入点-->
+            <aop:pointcut id="txPoint" expression="execution(* com.lee.demo.service..*(..))"/>
+            <!--配置通知 是方法前还是方法后执行
+                前置增强
+            -->
+            <aop:before method="begin" pointcut-ref="txPoint"></aop:before>
+            <!--配置后置增强-->
+            <!--目标方法执行成功后 才会执行-->
+            <!--<aop:after-returning method="commit" pointcut-ref="txPoint"/>-->
+
+            <!-- 最终增强   只要目标方法执行后都执行，不管目标方法是成功还是失败-->
+            <aop:after-returning method="commit" pointcut-ref="txPoint"/>
+            <!--释放资源-->
+            <!--<aop:after method="close" pointcut-ref="txPoint"/>-->
+            <!--配置抛异常的增强-->
+            <aop:after-throwing method="rollback" pointcut-ref="txPoint" throwing="ex"/>
+
+            <!--
+                环绕通知 : 相当于 spring给我们提供了一个通过代码手动控制增强方法执行的时机
+               -->
+            <!--<aop:around method="round" pointcut-ref="txPoint"/>-->
+
+        </aop:aspect>
+    </aop:config>
+
+</beans>
