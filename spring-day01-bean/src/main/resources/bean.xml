@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--
+        Spring创建bean的三种方式
+            1.通过默认构造函数
+            2.工厂类（工厂类中的方法）
+            3. 工厂中的静态方法
+    -->
+    <!--第一种方式： 使用的就是默认构造函数的方式
+    <bean id="userService" class="com.lee.demo.service.impl.UserServiceImpl"/>
+-->
+
+    <!--第二种方式：使用工厂类中的方法
+    <bean id="beanFactory" class="com.lee.demo.factory.BeanFactory" />
+    <bean id="userService" factory-bean="beanFactory" factory-method="getUserService"/>
+-->
+
+    <!-- 第三种方式 ：工厂类中的静态方法
+    <bean id="userService" class="com.lee.demo.factory.StaticFactory" factory-method="getUserService" />
+ -->
+    <!--
+        bean 创建时机  的单例和多例
+            prototype: 多例            需要的时候创建
+            singleton : 单例 （默认）   容器创建的时候创建
+            request  : web项目中spring创建一个bean对象，将对象存到request域中
+            session  : web项目中…将对象存到session域中
+            global-seesioin:  集群环境
+    <bean id="userService" class="com.lee.demo.service.impl.UserServiceImpl" scope="singleton"/>
+    -->
+
+
+
+    <!--bean对象的生命周期
+        单例对象：
+            出生：容器创建的时候 出生
+            活着：容器还在对象就在
+            死亡：容器销毁对象死亡
+        多例对象：
+             出生 ：  用到的时候创建
+            活着： 对象只要在使用就一直存在
+            销毁：长时间不用的时候，有垃圾回收机制GC回收
+    -->
+    <bean id="userService" class="com.lee.demo.service.impl.UserServiceImpl"
+          scope="prototype" init-method="init" destroy-method="destory"/>
+
+
+
+</beans>

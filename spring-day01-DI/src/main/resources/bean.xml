@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--DI 依赖注入：
+               程序间的依赖ioc是spring帮我们创建了队形，
+               di就是我们的程序中的类需要用到哪个类 都又spring管理，我们只需要告诉它我们需要哪个类即可
+
+        依赖注入的三种方式：
+                1 . 构造函数
+                2. 使用set方法提供
+                3. 使用注解方式
+            注入的数据类型
+                1.基本类型
+                2，其他bean
+                3.复杂类型 /集合/数组
+    -->
+
+    <!--
+        1. 构造函数注入
+        <constructor-arg>
+                name:   用于指定给构造函数中指定的参数赋值
+                index:  用于指定要注入的数据给给构造函数中指定索引位置的参数赋值
+                type:   用于指定给构造函数中 指定要注入的数据类型，也是构造函数中某个或某些参数的类型
+                ref:    用于在指定要依赖的其他的bean
+                value:  给构造函数指定的参数赋值
+
+        特点： 在创建对象是，必须要注入所有的数据，否则是不能创建成功
+                不常用
+
+
+    <bean id="userService" class="com.lee.demo.service.impl.UserServiceImpl">
+        <constructor-arg name="name" value="z按"></constructor-arg>
+        <constructor-arg name="age" value="18"></constructor-arg>
+        <constructor-arg name="time" ref="date"></constructor-arg>
+    </bean>
+ -->
+    <!--定义日期类型-->
+    <bean id="date" class="java.util.Date"/>
+
+    <!--
+        使用set方式
+            <property>
+    -->
+    <bean id="userService" class="com.lee.demo.service.impl.UserServiceImpl">
+        <property name="name" value="部分"/>
+        <property name="age" value="20"/>
+        <property name="time" ref="date"/>
+    </bean>
+
+    <!--注入复杂类型 -->
+
+    <bean id="serviceImpl2" class="com.lee.demo.service.impl.UserServiceImpl2">
+        <!--数组-->
+        <property name="arr">
+            <array>
+                <value>1</value>
+                <value>哈哈</value>
+                <value>nia</value>
+            </array>
+        </property>
+        <!--list集合-->
+        <property name="list">
+            <list>
+                <value>集合</value>
+                <value>list</value>
+                <value>sss</value>
+            </list>
+        </property>
+        <!--set-->
+        <property name="set">
+            <set>
+                <value>set</value>
+                <value>dd</value>
+                <value>haha</value>
+            </set>
+        </property>
+        <!--map-->
+        <property name="map">
+            <map>
+                <entry key="1" value="ma"/>
+                <entry key="2" value="ap"/>
+            </map>
+        </property>
+        <!--properties-->
+        <property name="pro">
+            <props>
+                <prop key="1">2</prop>
+                <prop key="2">3</prop>
+                <prop key="3">4</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
