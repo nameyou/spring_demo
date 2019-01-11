@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
@@ -9,7 +8,6 @@
 
 
     <bean id="userServce" class="com.lee.demo.service.impl.UserServceImpl"/>
-    <bean id="userServce2" class="com.lee.demo.service.impl.UserServceImpl2"/>
 
 
     <bean id="tx" class="com.lee.demo.tx.TranscationManager"/>
@@ -18,7 +16,7 @@
 
     <bean id="jdkProxy" class="com.lee.demo.jdk.JDKProxy">
         <property name="tx" ref="tx"/>
-        <property name="target" ref="userServce2"/>
+        <property name="target" ref="userServce"/>
     </bean>
 
 
